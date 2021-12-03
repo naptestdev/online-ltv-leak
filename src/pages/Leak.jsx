@@ -171,15 +171,17 @@ export default function Leak() {
                   ))}
                 </Collapse.Panel>
               )}
-              <Collapse.Panel header="Submissions">
-                <Link to={`/${id}/submission`}>
-                  <p style={{ margin: 0 }}>View the submissions.</p>
-                  <p style={{ margin: 0 }}>The size may be big.</p>
-                  <p style={{ margin: 0 }}>
-                    Make sure your machine is strong enough.
-                  </p>
-                </Link>
-              </Collapse.Panel>
+              {["test", "exercise"].includes(data.type) && (
+                <Collapse.Panel header="Submissions">
+                  <Link to={`/${id}/submission`}>
+                    <p style={{ margin: 0 }}>View the submissions.</p>
+                    <p style={{ margin: 0 }}>The size may be big.</p>
+                    <p style={{ margin: 0 }}>
+                      Make sure your machine is strong enough.
+                    </p>
+                  </Link>
+                </Collapse.Panel>
+              )}
               <Collapse.Panel header="Links">
                 {Object.entries(data.urls).map(([key, value]) => (
                   <p key={key}>
