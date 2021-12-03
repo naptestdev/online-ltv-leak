@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  word-break: break-all;
+}
+
+.ql-container > *:not(.ql-editor) {
+  display: none !important;
+}
