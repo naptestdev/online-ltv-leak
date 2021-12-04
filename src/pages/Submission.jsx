@@ -109,7 +109,6 @@ export default function Submission() {
                                   <div
                                     style={{
                                       display: "flex",
-                                      color: "#00ff00",
                                     }}
                                   >
                                     <span style={{ fontWeight: "bold" }}>
