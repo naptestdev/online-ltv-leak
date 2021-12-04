@@ -10,9 +10,7 @@ export default function Leak() {
   const { id } = useParams();
   const { data, error } = useSWR(id, () => leakData(id), {
     revalidateOnFocus: false,
-    revalidateOnMount: false,
     revalidateOnReconnect: false,
-    revalidateIfStale: false,
   });
 
   if (error)
