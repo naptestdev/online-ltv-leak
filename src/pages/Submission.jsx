@@ -10,7 +10,12 @@ import useSWR from "swr";
 export default function Submission() {
   const { id } = useParams();
 
-  const { data, error } = useSWR(`${id}-submission`, () => getSubmissions(id));
+  const { data, error } = useSWR(`${id}-submission`, () => getSubmissions(id), {
+    revalidateOnFocus: false,
+    revalidateOnMount: false,
+    revalidateOnReconnect: false,
+    revalidateIfStale: false,
+  });
 
   if (error)
     return (
