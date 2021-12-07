@@ -81,9 +81,17 @@ export default function Submission() {
             </h2>
             <Collapse>
               {data.submission.map(
-                ({ email, name, correct, total, questions, answers }) => (
+                ({
+                  email,
+                  name,
+                  correct,
+                  total,
+                  questions,
+                  answers,
+                  startTime,
+                }) => (
                   <Collapse.Panel
-                    key={email}
+                    key={email + startTime}
                     header={`${name} (${email}) - ${correct} / ${total}`}
                   >
                     {questions.map((question, index) => (
@@ -105,26 +113,27 @@ export default function Submission() {
                           Object.entries(question.answers).map(
                             ([_, answer], index) => (
                               <div key={index}>
-                                {answer.value && (
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                    }}
-                                  >
-                                    <span style={{ fontWeight: "bold" }}>
-                                      {answer.label}:{" "}
-                                    </span>
-                                    <span
-                                      dangerouslySetInnerHTML={{
-                                        __html: answer.value,
+                                {answer.value &&
+                                  answer.value !== answer?.label && (
+                                    <div
+                                      style={{
+                                        display: "flex",
                                       }}
-                                    ></span>
-                                  </div>
-                                )}
+                                    >
+                                      <span style={{ fontWeight: "bold" }}>
+                                        {answer?.label}:{" "}
+                                      </span>
+                                      <span
+                                        dangerouslySetInnerHTML={{
+                                          __html: answer.value,
+                                        }}
+                                      ></span>
+                                    </div>
+                                  )}
                               </div>
                             )
                           )}
-                        {answers[question._id] && (
+                        {answers?.[question._id] && (
                           <div
                             style={{
                               display: "flex",
@@ -141,17 +150,23 @@ export default function Submission() {
                               Your answer:{" "}
                               {
                                 question.answers[answers[question._id].answerId]
-                                  .label
+                                  ?.label
                               }
                             </p>
                             <p style={{ color: "#198754" }}>
                               Correct answer:{" "}
                               {
                                 question.answers[answers[question._id].correct]
-                                  .label
+                                  ?.label
                               }
                             </p>
                           </div>
+                        )}
+                        {question.correct && (
+                          <p>
+                            This may be the correct answer{" "}
+                            {question.answers[question.correct].label}
+                          </p>
                         )}
                       </Fragment>
                     ))}
