@@ -94,7 +94,7 @@ export default function Submission() {
                     key={email + startTime}
                     header={`${name} (${email}) - ${correct} / ${total}`}
                   >
-                    {questions.map((question, index) => (
+                    {questions.reverse().map((question, index) => (
                       <Fragment key={index}>
                         <h3>
                           {question.html ? (
@@ -106,7 +106,7 @@ export default function Submission() {
                               }}
                             />
                           ) : (
-                            <span>Question {index + 1}</span>
+                            <span>Question {question.index + 1}</span>
                           )}
                         </h3>
                         {question.answers &&
