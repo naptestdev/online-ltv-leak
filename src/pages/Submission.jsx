@@ -3,6 +3,7 @@ import { Collapse, Spin } from "antd";
 import { Button } from "antd";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 import { getSubmissions } from "../services/api";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
@@ -89,6 +90,7 @@ export default function Submission() {
                   questions,
                   answers,
                   startTime,
+                  logs,
                 }) => (
                   <Collapse.Panel
                     key={email + startTime}
@@ -166,6 +168,22 @@ export default function Submission() {
                           <p>
                             This may be the correct answer{" "}
                             {question.answers[question.correct].label}
+                          </p>
+                        )}
+                        {Object.entries(logs).find(
+                          ([key, value]) =>
+                            value?.detail?.questionId === question._id
+                        )?.[0] && (
+                          <p>
+                            You entered this answer on:{" "}
+                            {dayjs(
+                              Number(
+                                Object.entries(logs).find(
+                                  ([key, value]) =>
+                                    value?.detail?.questionId === question._id
+                                )?.[0]
+                              )
+                            ).format("ddd MMM DD HH:mm A")}
                           </p>
                         )}
                       </Fragment>
