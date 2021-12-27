@@ -11,7 +11,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path=":id">
           <Route index element={<Leak />} />
-          <Route path="submission" element={<Submission />} />
+          <Route path="submission/:userId" element={<Submission />} />
         </Route>
       </Routes>
     </div>

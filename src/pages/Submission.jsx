@@ -9,12 +9,16 @@ import { useParams } from "react-router-dom";
 import useSWR from "swr";
 
 export default function Submission() {
-  const { id } = useParams();
+  const { id, userId } = useParams();
 
-  const { data, error } = useSWR(`${id}-submission`, () => getSubmissions(id), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  const { data, error } = useSWR(
+    `${id}-submission`,
+    () => getSubmissions(id, userId),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
 
   if (error)
     return (
@@ -94,7 +98,16 @@ export default function Submission() {
                 }) => (
                   <Collapse.Panel
                     key={email + startTime}
-                    header={`${name} (${email}) - ${correct} / ${total}`}
+                    header={`${name} (${email}) - ${
+                      correct ||
+                      Math.round(
+                        Object.entries(answers).reduce((prev, [_, value]) => {
+                          if (value.isCorrect)
+                            prev += 10 / Object.keys(answers).length;
+                          return prev;
+                        }, 0) * 10
+                      ) / 10
+                    } / ${total}`}
                   >
                     {questions.reverse().map((question, index) => (
                       <Fragment key={index}>

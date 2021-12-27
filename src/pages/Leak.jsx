@@ -1,8 +1,7 @@
-import { Collapse, Spin } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { Button, Collapse, Input, Spin } from "antd";
+import { Fragment, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { Button } from "antd";
-import { Fragment } from "react";
 import { leakData } from "../services/api";
 import useSWR from "swr";
 
@@ -12,6 +11,9 @@ export default function Leak() {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
+
+  const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
 
   if (error)
     return (
@@ -174,13 +176,22 @@ export default function Leak() {
               )}
               {["test", "exercise"].includes(data.type) && (
                 <Collapse.Panel header="Submissions">
-                  <Link to={`/${id}/submission`}>
-                    <p style={{ margin: 0 }}>View the submissions.</p>
-                    <p style={{ margin: 0 }}>The size may be big.</p>
-                    <p style={{ margin: 0 }}>
-                      Make sure your machine is strong enough.
-                    </p>
-                  </Link>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (inputValue.trim()) {
+                        navigate(`/${id}/submission/${inputValue.trim()}`);
+                      }
+                    }}
+                    style={{ display: "flex", alignItems: "center", gap: 6 }}
+                  >
+                    <Input
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Your user ID"
+                    />
+                    <Button htmlType="submit">View</Button>
+                  </form>
                 </Collapse.Panel>
               )}
               <Collapse.Panel header="Links">

@@ -82,14 +82,15 @@ export const leakData = async (id) => {
   return response;
 };
 
-export const getSubmissions = async (id) => {
+export const getSubmissions = async (id, userId) => {
   const infoData = (await axios.get(INFO_URL(id))).data;
 
   const title = infoData.title;
 
   const examId = infoData.exam;
 
-  const submissionData = (await axios.get(SUBMISSIONS_URL(examId))).data;
+  const submissionData = (await axios.get(SUBMISSIONS_URL(examId, userId)))
+    .data;
 
   return {
     title,
