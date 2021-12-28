@@ -176,6 +176,12 @@ export default function Leak() {
               )}
               {["test", "exercise"].includes(data.type) && (
                 <Collapse.Panel header="Submissions">
+                  <div>
+                    <Link to={`/${id}/submission`}>
+                      View all submission (Will return error if data is too big)
+                    </Link>
+                  </div>
+                  <hr />
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();

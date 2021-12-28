@@ -8,4 +8,6 @@ export const QUESTIONS_URL = (examId) =>
   `https://iptoqoeg36.execute-api.ap-southeast-1.amazonaws.com/prod/question?exam=${examId}`;
 
 export const SUBMISSIONS_URL = (examId, userId) =>
-  `https://iptoqoeg36.execute-api.ap-southeast-1.amazonaws.com/prod/submission?exam=${examId}&_populate=questions+generateQuestion&userId=${userId}`;
+  `https://iptoqoeg36.execute-api.ap-southeast-1.amazonaws.com/prod/submission?exam=${examId}&_populate=questions+generateQuestion${
+    userId ? `userId=${userId}` : ""
+  }`;

@@ -100,13 +100,14 @@ export default function Submission() {
                     key={email + startTime}
                     header={`${name} (${email}) - ${
                       correct ||
-                      Math.round(
-                        Object.entries(answers).reduce((prev, [_, value]) => {
-                          if (value.isCorrect)
-                            prev += 10 / Object.keys(answers).length;
-                          return prev;
-                        }, 0) * 10
-                      ) / 10
+                      (answers &&
+                        Math.round(
+                          Object.entries(answers).reduce((prev, [_, value]) => {
+                            if (value.isCorrect)
+                              prev += 10 / Object.keys(answers).length;
+                            return prev;
+                          }, 0) * 10
+                        ) / 10)
                     } / ${total}`}
                   >
                     {questions.reverse().map((question, index) => (
@@ -148,7 +149,7 @@ export default function Submission() {
                               </div>
                             )
                           )}
-                        {answers?.[question._id] && (
+                        {answers?.[question._id] ? (
                           <div
                             style={{
                               display: "flex",
@@ -170,29 +171,25 @@ export default function Submission() {
                             </p>
                             <p style={{ color: "#198754" }}>
                               Correct answer:{" "}
-                              {
-                                question.answers[answers[question._id].correct]
-                                  ?.label
-                              }
+                              {question.answers[question.correct].label}
                             </p>
                           </div>
-                        )}
-                        {question.correct && (
+                        ) : (
                           <p>
-                            This may be the correct answer{" "}
+                            Correct answer:{" "}
                             {question.answers[question.correct].label}
                           </p>
                         )}
                         {Object.entries(logs).find(
-                          ([key, value]) =>
+                          ([_, value]) =>
                             value?.detail?.questionId === question._id
                         )?.[0] && (
                           <p>
-                            You entered this answer on:{" "}
+                            Entered time:{" "}
                             {dayjs(
                               Number(
                                 Object.entries(logs).find(
-                                  ([key, value]) =>
+                                  ([_, value]) =>
                                     value?.detail?.questionId === question._id
                                 )?.[0]
                               )
