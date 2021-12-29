@@ -3,6 +3,7 @@ import {
   QUESTIONS_URL,
   RESOURCES_URL,
   SUBMISSIONS_URL,
+  USER_IDS,
 } from "../shared/constant";
 
 import axios from "axios";
@@ -89,11 +90,32 @@ export const getSubmissions = async (id, userId) => {
 
   const examId = infoData.exam;
 
-  const submissionData = (await axios.get(SUBMISSIONS_URL(examId, userId)))
-    .data;
+  try {
+    const submissionData = (await axios.get(SUBMISSIONS_URL(examId, userId)))
+      .data;
 
-  return {
-    title,
-    submission: submissionData,
-  };
+    return {
+      title,
+      submission: submissionData,
+    };
+  } catch (error) {
+    console.log(error);
+
+    const submissionData = (
+      await Promise.allSettled(
+        USER_IDS.map(
+          async (id) => (await axios.get(SUBMISSIONS_URL(examId, id))).data
+        )
+      )
+    )
+      .filter((item) => item.status === "fulfilled")
+      .map((item) => item.value[0]);
+
+    console.log(submissionData);
+
+    return {
+      title,
+      submission: submissionData,
+    };
+  }
 };

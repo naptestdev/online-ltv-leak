@@ -177,7 +177,7 @@ export default function Submission() {
                         ) : (
                           <p>
                             Correct answer:{" "}
-                            {question.answers[question.correct].label}
+                            {question.answers[question.correct]?.label}
                           </p>
                         )}
                         {Object.entries(logs).find(
