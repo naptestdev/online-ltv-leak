@@ -180,22 +180,23 @@ export default function Submission() {
                             {question.answers[question.correct]?.label}
                           </p>
                         )}
-                        {Object.entries(logs).find(
-                          ([_, value]) =>
-                            value?.detail?.questionId === question._id
-                        )?.[0] && (
-                          <p>
-                            Entered time:{" "}
-                            {dayjs(
-                              Number(
-                                Object.entries(logs).find(
-                                  ([_, value]) =>
-                                    value?.detail?.questionId === question._id
-                                )?.[0]
-                              )
-                            ).format("ddd MMM DD HH:mm A")}
-                          </p>
-                        )}
+                        {logs &&
+                          Object.entries(logs).find(
+                            ([_, value]) =>
+                              value?.detail?.questionId === question._id
+                          )?.[0] && (
+                            <p>
+                              Entered time:{" "}
+                              {dayjs(
+                                Number(
+                                  Object.entries(logs).find(
+                                    ([_, value]) =>
+                                      value?.detail?.questionId === question._id
+                                  )?.[0]
+                                )
+                              ).format("ddd MMM DD HH:mm A")}
+                            </p>
+                          )}
                       </Fragment>
                     ))}
                   </Collapse.Panel>
