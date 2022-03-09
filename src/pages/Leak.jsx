@@ -87,7 +87,7 @@ export default function Leak() {
             </h2>
             <Collapse>
               {data.settings && (
-                <Collapse.Panel header="Settings">
+                <Collapse.Panel key="settings" header="Settings">
                   {Object.entries(data.settings).map(([key, value]) => (
                     <p key={key} style={{ margin: 0 }}>
                       <b>
@@ -104,7 +104,7 @@ export default function Leak() {
                 </Collapse.Panel>
               )}
               {data.questions && (
-                <Collapse.Panel header="Questions">
+                <Collapse.Panel key="questions" header="Questions">
                   {data.questions.map((question, index) => (
                     <div key={index}>
                       <h3>
@@ -142,40 +142,22 @@ export default function Leak() {
                 </Collapse.Panel>
               )}
               {data.resources && (
-                <Collapse.Panel header="Resources">
+                <Collapse.Panel key="resources" header="Resources">
                   {data.resources.map((resource, index) => (
-                    <Fragment key={index}>
-                      <div style={{ marginBottom: 20 }}>
-                        <a href={resource} target="_blank">
-                          {resource}
-                        </a>
-                      </div>
-                      <div
-                        style={{
-                          width: "100%",
-                          height: 0,
-                          paddingBottom: "100%",
-                          position: "relative",
-                        }}
+                    <div key={resource}>
+                      <a
+                        href={resource}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
-                        <iframe
-                          style={{
-                            position: "absolute",
-                            width: "100%",
-                            height: "100%",
-                            top: 0,
-                            left: 0,
-                          }}
-                          src={resource}
-                          frameborder="0"
-                        ></iframe>
-                      </div>
-                    </Fragment>
+                        {resource}
+                      </a>
+                    </div>
                   ))}
                 </Collapse.Panel>
               )}
               {["test", "exercise"].includes(data.type) && (
-                <Collapse.Panel header="Submissions">
+                <Collapse.Panel key="submissions" header="Submissions">
                   <div>
                     <Link to={`/${id}/submission`}>
                       View all submission (Will return error if data is too big)
@@ -200,7 +182,7 @@ export default function Leak() {
                   </form>
                 </Collapse.Panel>
               )}
-              <Collapse.Panel header="Links">
+              <Collapse.Panel key="links" header="Links">
                 {Object.entries(data.urls).map(([key, value]) => (
                   <p key={key}>
                     {key}:{" "}
